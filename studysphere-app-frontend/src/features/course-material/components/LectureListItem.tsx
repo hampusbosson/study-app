@@ -43,9 +43,13 @@ const LectureListItem: React.FC<LectureListItemProps> = ({
       }}
     >
       <div
-        className={`flex flex-row items-center gap-1 ${activeLecture === lectureItem.title ? "text-white font-semibold" : "text-gray-300"}`}
+        className={`flex flex-row items-center gap-2 rounded-md px-2 py-1.5 transition ${
+          activeLecture === lectureItem.title
+            ? "bg-blue-50 font-semibold text-accent"
+            : "text-slate-500 hover:bg-slate-50 hover:text-text"
+        }`}
       >
-        <p>-</p>
+        <span className="h-2 w-2 rounded-full bg-current opacity-70"></span>
         <p>{lectureItem.title}</p>
       </div>
       <div></div>

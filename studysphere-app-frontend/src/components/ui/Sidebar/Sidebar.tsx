@@ -171,9 +171,10 @@ const SideBar: React.FC<SideBarProps> = ({
   };
 
   return (
-    <div className="bg-background border-r border-gray-800 flex flex-col h-full p-4">
+    <div className="h-full rounded-lg border border-border bg-white p-4 shadow-sm">
       <div className="sticky top-2 z-10">
-      <p className="font-bold text-lg mb-4 ">My Courses</p>
+      <p className="text-sm font-semibold uppercase tracking-normal text-accent">Library</p>
+      <p className="mb-5 mt-2 font-montserrat text-xl font-bold text-text">My courses</p>
       <ul className="space-y-2">
         {courses?.map((courseItem, index) => (
           <CourseItem

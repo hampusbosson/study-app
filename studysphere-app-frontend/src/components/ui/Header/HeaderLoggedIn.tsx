@@ -2,12 +2,12 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 import ProfileButton from "./ProfileButton";
 import ProfileModal from "./ProfileModal";
 import useAuth from "../../../hooks/auth/useAuth";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { paths } from "../../../config/paths";
-
 
 const HeaderLoggedIn: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
   const { user } = useAuth();
@@ -16,10 +16,10 @@ const HeaderLoggedIn: React.FC = () => {
   const closeModal = () => setIsModalOpen(false);
 
     // Determine active button based on the current path.
-    let activeButton = "";
-    if (location.pathname.startsWith("/home")) activeButton = "home";
-    else if (location.pathname.startsWith("/courses")) activeButton = "courses";
-    else if (location.pathname.startsWith("/calendar")) activeButton = "calendar";
+  let activeButton = "";
+  if (location.pathname.startsWith("/home")) activeButton = "home";
+  else if (location.pathname.startsWith("/courses")) activeButton = "courses";
+  else if (location.pathname.startsWith("/calendar")) activeButton = "calendar";
 
   // Memoize handleClickOutside to avoid unnecessary re-renders
   const handleClickOutside = useCallback((event: MouseEvent) => {
@@ -54,27 +54,62 @@ const HeaderLoggedIn: React.FC = () => {
   const handleCalendarClick = () => {
     navigate(paths.app.calendar.getHref());
   }
-
-
-
   return (
-    <div className="header flex flex-row items-center p-2 px-4 border-gray-800 border-b justify-between">
-      <div className="flex flex-row gap-6">
-        <button onClick={handleHomeClick} className={`${activeButton === 'home' ? 'underline' : ''}`}>Home</button>
-        <button onClick={handleCoursesClick} className={`${activeButton === 'courses' ? 'underline' : ''}`}>Courses</button>
-        <button onClick={handleCalendarClick} className={`${activeButton === 'calendar' ? 'underline' : ''}`}>Calendar</button>
-      </div>
-      <ProfileButton firstLetterEmail={firstLetterEmail} onPress={openModal} />
-      {isModalOpen && (
-        <div
-          ref={modalRef}
-          style={{
-            position: "absolute",
-          }}
-        >
-          <ProfileModal email={user?.email} />
+    <div className="sticky top-0 z-40 border-b border-border/80 bg-white/85 backdrop-blur-xl">
+      <div className="mx-auto flex w-full max-w-[1600px] items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
+        <div className="flex items-center gap-6">
+          <div>
+            <p className="font-montserrat text-xl font-bold text-text">StudySphere</p>
+            <p className="text-sm text-muted">Focused study, clearer notes.</p>
+          </div>
+          <div className="flex items-center gap-2 rounded-full border border-border bg-slate-50 p-1">
+            <button
+              onClick={handleHomeClick}
+              className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
+                activeButton === "home"
+                  ? "bg-white text-accent shadow-sm"
+                  : "text-muted hover:text-text"
+              }`}
+            >
+              Home
+            </button>
+            <button
+              onClick={handleCoursesClick}
+              className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
+                activeButton === "courses"
+                  ? "bg-white text-accent shadow-sm"
+                  : "text-muted hover:text-text"
+              }`}
+            >
+              Courses
+            </button>
+            <button
+              onClick={handleCalendarClick}
+              className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
+                activeButton === "calendar"
+                  ? "bg-white text-accent shadow-sm"
+                  : "text-muted hover:text-text"
+              }`}
+            >
+              Calendar
+            </button>
+          </div>
         </div>
-      )}
+        <div className="flex items-center gap-3">
+          <div className="hidden text-right sm:block">
+            <p className="text-sm font-semibold text-text">Welcome back</p>
+            <p className="max-w-56 truncate text-sm text-muted">{user?.email}</p>
+          </div>
+          <div className="relative">
+            <ProfileButton firstLetterEmail={firstLetterEmail} onPress={openModal} />
+            {isModalOpen && (
+              <div ref={modalRef} className="absolute right-0 top-14">
+                <ProfileModal email={user?.email} />
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

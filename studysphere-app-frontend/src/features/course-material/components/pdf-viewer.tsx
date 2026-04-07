@@ -44,7 +44,7 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ url }) => {
         }
       >
         {isDocumentReady &&
-          Array.from(new Array(numPages), (el, index) => (
+          Array.from(new Array(numPages), (_, index) => (
             <div key={`page_${index + 1}`} className="m-0 pb-4 space-y-0">
               <Page
                 key={`page_${index + 1}`}

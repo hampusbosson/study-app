@@ -9,20 +9,27 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: "#0e0e0e",
-        backgroundOverlay: "#FFFFFF08",
-        card: "#1E1E1E",
-        accent: "#007ACC",
-        accentHover: "#3F56E6",
-        silver: '#E5E5E5',
+        background: "#f4f7fb",
+        backgroundOverlay: "#ffffffb3",
+        card: "#ffffff",
+        surface: "#ffffff",
+        surfaceAlt: "#eef4ff",
+        border: "#d8e1f0",
+        text: "#0f172a",
+        muted: "#64748b",
+        accent: "#2563eb",
+        accentHover: "#1d4ed8",
+        accentSoft: "#dbeafe",
+        silver: "#e2e8f0",
       },
       backgroundImage: {
-        'accent-gradient': 'linear-gradient(rgb(42, 255, 255) 12%, rgb(71, 98, 255) 79%)', 
-        'shiny-silver': 'linear-gradient(90deg, #C0C0C0, #E5E5E5, #C0C0C0)',
+        "accent-gradient":
+          "linear-gradient(135deg, #60a5fa 0%, #2563eb 55%, #0f172a 100%)",
+        "shiny-silver": "linear-gradient(90deg, #64748b, #0f172a, #64748b)",
       },
       fontFamily: {
-        montserrat: ['Montserrat', 'sans-serif'], 
-        raleway: ['Raleway', 'sans-serif'], 
+        montserrat: ["Montserrat", "sans-serif"],
+        raleway: ["Raleway", "sans-serif"],
       },
       fontWeight: {
         hairline: 100,
@@ -38,15 +45,15 @@ export default {
          black: 900,
        },
        boxShadow: {
-        'glow-accent': '0 0 4px #4762FF, 0 0 8px #4762FF', // Dimmer default glow
-        'glow-accent-active': '0 0 8px #4762FF, 0 0 16px #4762FF', // Brighter glow for hover/active
+        "glow-accent": "0 18px 40px rgba(37, 99, 235, 0.18)",
+        "glow-accent-active": "0 22px 50px rgba(37, 99, 235, 0.24)",
       },
     },
   },
   plugins: [
     function ({ addBase }) {
       addBase({
-        'html, body': { fontFamily: 'raleway, sans-serif' }, // Set Montserrat as the default font
+        "html, body": { fontFamily: "raleway, sans-serif" },
       });
     },
     tailwindScrollbar({ nocompatible: true }),

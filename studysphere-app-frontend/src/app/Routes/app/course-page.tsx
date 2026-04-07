@@ -22,8 +22,8 @@ const CoursePage: React.FC = () => {
 
   return (
     <DashboardLayout>
-      <div className="h-full grid grid-cols-6">
-        <div className="col-span-1">
+      <div className="grid h-full gap-6 xl:grid-cols-[320px_minmax(0,1fr)]">
+        <div>
           <SideBar
             courses={courses}
             setCourses={setCourses}
@@ -34,7 +34,7 @@ const CoursePage: React.FC = () => {
             lecturesByCourse={lecturesByCourse}
           />
         </div>
-        <div className="col-span-5 px-8 py-6">
+        <div className="min-w-0">
           {!lectureRouteMatch ? ( // Render ContentBox when not on a lecture page
             <>
               <ContentBox

@@ -29,15 +29,15 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ email }) => {
     }
 
   return (
-    <div className="fixed top-32 right-6 transform -translate-y-1/2 flex justify-start items-start z-50 bg-background w-64 rounded-lg border border-gray-400">
+    <div className="flex w-64 justify-start rounded-lg border border-border bg-white shadow-2xl shadow-slate-200/70">
       <div className="flex flex-col items-start w-full">
-      <p className="font-raleway truncate overflow-hidden w-full max-w-[16rem] px-4 pt-2 mb-2">
+      <p className="w-full max-w-[16rem] truncate px-4 pb-3 pt-4 font-raleway text-sm font-medium text-slate-600">
           {email}
         </p>
-        <div className="w-full border-t border-gray-500 flex flex-col">
+        <div className="flex w-full flex-col border-t border-border">
             <ProfileModalButton name="Upgrade" icon={icons.upgradeIcon} className=""/>
             <ProfileModalButton name="Settings" icon={icons.settingsIcon}/>
-            <ProfileModalButton name="Logout" icon={icons.logoutIcon} className="rounded-b-lg pb-3" onPress={handleLogout}/>
+            <ProfileModalButton name="Logout" icon={icons.logoutIcon} className="rounded-b-lg text-rose-600 hover:bg-rose-50 hover:text-rose-700" onPress={handleLogout}/>
         </div>
       </div>
     </div>

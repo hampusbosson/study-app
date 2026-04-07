@@ -53,38 +53,72 @@ const ContentBox: React.FC<ContentBoxProps> = ({
         <LoadingSpinner type={"creation"}/>
       ) : (
         <>
-          <div className="flex flex-row justify-between items-start">
-            <h1 className="text-4xl font-semibold font-montserrat">
-              {activeCourse ? activeCourse.name : null}
-            </h1>
+          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-4 rounded-lg border border-border bg-white p-6 shadow-sm lg:flex-row lg:items-start lg:justify-between">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-normal text-accent">Course workspace</p>
+              <h1 className="mt-2 font-montserrat text-4xl font-semibold text-text">
+                {activeCourse ? activeCourse.name : "Choose a course"}
+              </h1>
+              <p className="mt-3 max-w-2xl text-sm text-muted">
+                Keep your lecture material in one place, then open any item to read the source and generate a summary.
+              </p>
+            </div>
             <button
-              className="flex flex-row items-center gap-2 bg-accent pl-3 pr-4 py-2 rounded-lg hover:bg-accentHover"
+              className="flex flex-row items-center gap-2 rounded-lg bg-accent px-4 py-3 font-semibold text-white shadow-glow-accent transition hover:bg-accentHover"
               onClick={openCourseModal}
             >
               {icons.plusIcon}
-              <p className="font-semibold text-lg">New Course</p>
+              <p className="text-base">New Course</p>
             </button>
           </div>
-          <div className="mt-4">
+          <div className="rounded-lg border border-border bg-white p-6 shadow-sm">
+            <div className="flex items-center justify-between gap-4">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-normal text-accent">Lectures</p>
+                <h2 className="mt-2 font-montserrat text-2xl font-bold text-text">Course material</h2>
+              </div>
             <button
               onClick={openLectureModal}
-              className="flex flex-row bg-gray-700 rounded-lg py-2 pl-3 pr-4 items-center justify-center gap-1 hover:bg-gray-800 font-semibold"
+              className="flex flex-row items-center justify-center gap-2 rounded-lg bg-slate-900 px-4 py-3 font-semibold text-white transition hover:bg-slate-800"
             >
               {icons.plusIcon} Add lecture
             </button>
+            </div>
+            {currentLectures.length === 0 ? (
+              <div className="mt-8 rounded-lg border border-dashed border-slate-300 bg-slate-50 px-6 py-12 text-center">
+                <p className="text-lg font-semibold text-text">No lectures yet</p>
+                <p className="mt-2 text-sm text-muted">
+                  Add a lecture URL to create your first study item for this course.
+                </p>
+              </div>
+            ) : (
             <ul className="flex flex-row gap-10 flex-wrap mt-6">
               {currentLectures.map((lectureItem, index) => (
                 <li
                   key={index}
-                  className="bg-card border border-gray-600 w-56 h-60 rounded-lg hover:border-gray-400 hover:cursor-pointer"
+                  className="group w-64 cursor-pointer rounded-lg border border-border bg-slate-50 p-5 transition hover:-translate-y-0.5 hover:border-blue-200 hover:bg-white hover:shadow-lg hover:shadow-blue-100/70"
                   onClick={() => handleLectureClick(lectureItem)}
                 >
-                  <div className="py-2 border-b border-gray-600 font-semibold text-center">
+                  <div className="flex h-full flex-col justify-between">
+                  <div>
+                  <div className="inline-flex rounded-full bg-accentSoft px-3 py-1 text-xs font-semibold text-accent">
+                    Lecture
+                  </div>
+                  <div className="py-4 font-semibold text-text">
                     {lectureItem.title}
+                  </div>
+                  <p className="text-sm text-muted">
+                    Open the original document, generate a summary, and keep the material attached to this course.
+                  </p>
+                  </div>
+                  <p className="text-sm font-semibold text-accent group-hover:text-accentHover">Open workspace</p>
                   </div>
                 </li>
               ))}
             </ul>
+            )}
+          </div>
           </div>
           {isClassModalOpen && (
             <NewCourseModal onClose={closeCourseModal} setCourses={setCourses} />

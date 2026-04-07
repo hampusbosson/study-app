@@ -66,16 +66,16 @@ const CourseItem: React.FC<CourseItemProps> = ({
 
   return (
     <li
-      className={`cursor-pointer flex flex-col justify-between font-semibold ${
+      className={`cursor-pointer rounded-lg border px-3 py-3 transition ${
         activeCourse?.name === courseItem.name
-          ? "text-white decoration-1"
-          : "text-gray-300 hover:text-white"
+          ? "border-blue-200 bg-blue-50 text-text"
+          : "border-transparent text-slate-600 hover:border-slate-200 hover:bg-slate-50 hover:text-text"
       }`}
       onClick={() => handleCourseClick(courseItem)}
       onMouseEnter={() => setHoveredCourse(courseItem.name)}
       onMouseLeave={() => setHoveredCourse(null)}
     >
-      <div className="flex flex-row justify-between">
+      <div className="flex flex-row justify-between gap-2">
         {courseInEdit === courseItem.name ? (
           <div className="flex flex-row gap-1 items-center">
             <div
@@ -94,15 +94,15 @@ const CourseItem: React.FC<CourseItemProps> = ({
                 type="text"
                 value={editValues[courseItem.name] || ""}
                 onChange={(e) => handleChange(e, courseItem.name)}
-                className="bg-transparent border-b border-gray-600 text-white focus:outline-none w-[90%]"
+                className="w-[90%] border-b border-slate-300 bg-transparent text-sm font-semibold text-text focus:outline-none"
               />
             </form>
           </div>
         ) : (
-          <div className="flex flex-row gap-1 items-center">
+          <div className="flex flex-row gap-2 items-center">
             <button
               type="button"
-              className="text-gray-500 hover:text-white"
+              className="text-slate-400 hover:text-text"
               onClick={(e) => {
                 e.stopPropagation();
                 if (listOpen?.[courseItem.name]) {
@@ -120,11 +120,14 @@ const CourseItem: React.FC<CourseItemProps> = ({
                 {icons.chevronRight()}
               </div>
             </button>
-            <span>{courseItem.name}</span>
+            <div>
+              <span className="text-sm font-semibold">{courseItem.name}</span>
+              <p className="text-xs text-muted">{currentLectures.length} lectures</p>
+            </div>
           </div>
         )}
         {hoveredCourse === courseItem.name && (
-          <div className="flex flex-row gap-2 -mr-2">
+          <div className="flex flex-row gap-2">
             <button
               onClick={(e) => {
                 e.stopPropagation();
@@ -146,16 +149,16 @@ const CourseItem: React.FC<CourseItemProps> = ({
       </div>
       {listOpen?.[courseItem.name] && (
         <ul
-          className={`ml-3 flex flex-col w-[90%] ${
+          className={`ml-6 mt-3 flex w-[90%] flex-col ${
             currentLectures && currentLectures.length > 0
-              ? "border-b border-gray-700 pb-2 mt-2 gap-2"
+              ? "gap-2 border-l border-slate-200 pl-3"
               : ""
           }`}
         >
           {currentLectures?.map((lectureItem, index) => (
             <li
               key={index}
-              className="text-white text-sm font-light hover:font-medium"
+              className="text-sm"
             >
               <LectureListItem 
                 setActiveLecture={setActiveLecture}

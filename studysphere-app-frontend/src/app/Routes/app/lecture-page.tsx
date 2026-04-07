@@ -63,13 +63,19 @@ const LecturePage: React.FC = () => {
   };
 
   return (
-    <div className="px-24">
-      <div className="flex flex-row gap-2 text-gray-400 text-sm">
+    <div className="min-w-0">
+      <div className="mb-6 rounded-lg border border-border bg-white p-6 shadow-sm">
+      <div className="flex flex-row gap-2 text-sm text-muted">
         <button onClick={handleClassClick}>{activeCourse?.name}</button>
         <p> / </p>
-        <p className="text-white">{lecture?.title}</p>
+        <p className="text-text">{lecture?.title}</p>
       </div>
-      <div className="rounded-xl mt-2 flex flex-col gap-2">
+      <h1 className="mt-3 font-montserrat text-3xl font-bold text-text">{lecture?.title}</h1>
+      <p className="mt-2 text-sm text-muted">
+        Switch between the source material and the study summary from one focused workspace.
+      </p>
+      </div>
+      <div className="flex flex-col gap-4">
         <Toolbar
           lecture={lecture}
           setActiveButton={setActiveButton}

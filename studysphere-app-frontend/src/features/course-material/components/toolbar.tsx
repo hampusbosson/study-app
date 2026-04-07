@@ -90,13 +90,13 @@ const Toolbar: React.FC<ToolbarProps> = ({
 
 
   return (
-    <div className="bg-card mb-4 flex flex-row justify-between p-2 rounded-md font-bold ">
-      <div className="flex flex-row gap-2">
+    <div className="flex flex-col gap-4 rounded-lg border border-border bg-white p-4 shadow-sm lg:flex-row lg:items-center lg:justify-between">
+      <div className="flex flex-wrap gap-2">
         <button
-          className={`py-2 px-6 rounded-sm flex flex-row gap-2 items-center text-gray-500 ${
+          className={`flex flex-row items-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold transition ${
             activeButton === "pdf"
-              ? "bg-black text-white"
-              : ""
+              ? "bg-slate-900 text-white"
+              : "bg-slate-50 text-slate-600 hover:bg-slate-100"
           }`}
           onClick={handlePdfClick}
         >
@@ -104,10 +104,10 @@ const Toolbar: React.FC<ToolbarProps> = ({
           <p>PDF</p>
         </button>
         <button
-          className={`py-2 px-6 rounded-sm flex flex-row gap-2 items-center text-gray-500  ${
+          className={`flex flex-row items-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold transition ${
             activeButton === "summary"
-              ? "bg-black text-white"
-              : ""
+              ? "bg-slate-900 text-white"
+              : "bg-slate-50 text-slate-600 hover:bg-slate-100"
           }`}
           onClick={handleSummaryClick}
         >
@@ -115,10 +115,10 @@ const Toolbar: React.FC<ToolbarProps> = ({
           <p>Summary</p>
         </button>
         <button
-          className={`py-2 px-6 rounded-sm flex flex-row gap-2 items-center text-gray-500  ${
+          className={`flex flex-row items-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold transition ${
             activeButton === "quiz"
-              ? "bg-background text-white"
-              : ""
+              ? "bg-slate-900 text-white"
+              : "bg-slate-50 text-slate-600 hover:bg-slate-100"
           }`}
           onClick={handleQuizClick}
         >
@@ -126,12 +126,13 @@ const Toolbar: React.FC<ToolbarProps> = ({
           <p>Quiz</p>
         </button>
       </div>
-      <div className="flex flex-row gap-4 items-center justify-center mr-4">
+      <div className="flex flex-row gap-2 items-center justify-center">
         <button
           onClick={(e) => {
             e.stopPropagation();
             handleEditClick();
           }}
+          className="rounded-lg bg-slate-50 p-3 text-slate-500 transition hover:bg-slate-100 hover:text-text"
         >
           {icons.editIcon(5)}
         </button>
@@ -140,6 +141,7 @@ const Toolbar: React.FC<ToolbarProps> = ({
             e.stopPropagation();
             openDeleteModal();
           }}
+          className="rounded-lg bg-rose-50 p-3 text-rose-600 transition hover:bg-rose-100"
         >
           {icons.deleteIcon(5)}
         </button>
