@@ -5,8 +5,13 @@ import { resetPassword } from "../../../lib/auth";
 import { useNavigate } from "react-router-dom";
 import ConfirmationModal from "../../../features/auth/components/ConfirmationModal";
 import { paths } from "../../../config/paths";
+import Logo from "../../../components/ui/Header/Logo";
 
 const ResetPassword: React.FC = () => {
+  const inputClassName =
+    "w-full rounded-lg border border-border bg-surface px-3 py-3 text-text placeholder:text-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-[var(--color-accent-soft)]";
+  const primaryButtonClassName =
+    "w-full rounded-lg bg-accent px-4 py-3 font-semibold text-white transition duration-200 hover:bg-accentHover";
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token"); // Extract the token from URL
   const [newPassword, setNewPassword] = useState("");
@@ -41,34 +46,42 @@ const ResetPassword: React.FC = () => {
   const handleModalClose = () => setModalVisible(false);
 
   return (
-    <div className="w-full flex flex-col justify-center items-center bg-background h-screen">
-      <h1 className="text-silver text-4xl mb-6">Reset Your Password</h1>
-      <form onSubmit={handleResetPassword} className="flex flex-col gap-4">
-        <input
-          type="password"
-          placeholder="New Password"
-          value={newPassword}
-          onChange={(e) => setNewPassword(e.target.value)}
-          className="border border-zinc-600 bg-[#1A1C2999] placeholder-gray-300 p-3 rounded-lg w-72 focus:outline-accent"
-        />
-        <input
-          type="password"
-          placeholder="Confirm Password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          className="border border-zinc-600 bg-[#1A1C2999] placeholder-gray-300 p-3 rounded-lg w-72 focus:outline-accent"
-        />
-        {errorMessage && <p className="text-red-500 text-xs -mt-2">{errorMessage}</p>}
-        <button
-          type="submit"
-          className="bg-accent text-white py-2 px-4 rounded-lg mt-2 hover:bg-accentHover"
-        >
-          Reset Password
-        </button>
-        <button className="font-semibold hover:bg-gray-900 rounded-lg p-2" onClick={handleLoginRedirect}>
+    <div className="flex h-screen w-full items-center justify-center bg-background px-4">
+      <div className="absolute top-4 left-4 p-2">
+        <Logo clickable={true} size={48} />
+      </div>
+      <div className="w-full max-w-md rounded-lg border border-border bg-surface px-6 py-8 shadow-sm sm:px-8">
+        <div className="mb-6 flex flex-col items-center gap-2 text-center">
+          <h1 className="text-4xl font-bold text-text">Reset your password</h1>
+          <p className="text-sm font-medium text-muted">Choose a new password for your account.</p>
+        </div>
+        <form onSubmit={handleResetPassword} className="flex flex-col gap-4">
+          <input
+            type="password"
+            placeholder="New Password"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            className={inputClassName}
+          />
+          <input
+            type="password"
+            placeholder="Confirm Password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            className={inputClassName}
+          />
+          {errorMessage && <p className="-mt-2 text-xs text-red-500">{errorMessage}</p>}
+          <button type="submit" className={primaryButtonClassName}>
+            Reset Password
+          </button>
+          <button
+            className="rounded-lg px-3 py-2 font-semibold text-muted transition hover:bg-surfaceAlt hover:text-text"
+            onClick={handleLoginRedirect}
+          >
             Login
-        </button>
-      </form>
+          </button>
+        </form>
+      </div>
       {modalVisible && (
         <ConfirmationModal message={modalMessage} onClose={handleModalClose}/>
       )} 

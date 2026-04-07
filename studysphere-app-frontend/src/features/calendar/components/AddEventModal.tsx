@@ -158,7 +158,7 @@ const AddEventModal: React.FC<AddEventModalProps> = ({
             </button>
             <button
               type="submit"
-              className="rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-slate-950 transition hover:bg-accentHover dark:text-white"
+              className="rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-accentHover"
             >
               Save event
             </button>

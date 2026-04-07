@@ -5,19 +5,20 @@ import classNames from "classnames";
 interface HeaderButtonProps {
   linkName: string;
   buttonName: string;
-  size?: number; 
+  size?: number;
 }
 
 const HeaderButton: React.FC<HeaderButtonProps> = ({ linkName, buttonName, size = 20 }) => {
-    const fontSize = { fontSize: `${size}px` };
+  const fontSize = { fontSize: `${size}px` };
+  const isSignup = linkName === "signup";
 
-    const buttonClass = classNames(
-        "font-medium text-lg rounded-3xl px-4 py-1 transition duration-200 flex justify-center items-center font-lato", // Base styles with padding and smooth hover effect
-        {
-            "hover:bg-gray-800": linkName !== "signup",
-          "border-2 border-white hover:bg-accent hover:border-accent": linkName === "signup", // Special styles for "signup"
-        }
-      );
+  const buttonClass = classNames(
+    "flex items-center justify-center rounded-full px-4 py-2 font-lato text-lg font-medium transition duration-200",
+    {
+      "text-text hover:bg-surfaceAlt": !isSignup,
+      "bg-accent text-white hover:bg-accentHover": isSignup,
+    }
+  );
 
   return (
     <Link to={linkName} className={buttonClass} style={fontSize}>

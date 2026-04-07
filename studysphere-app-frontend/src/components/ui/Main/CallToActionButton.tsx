@@ -7,9 +7,11 @@ interface CallToActionButtonProps {
 }
 
 const CallToActionButton: React.FC<CallToActionButtonProps> = ({ linkName, buttonName }) => {
-
   return (
-    <Link to={linkName} className="border rounded-full px-8 py-3 font-semibold text-2xl border-accent shadow-glow-accent transition duration-200 hover:shadow-glow-accent-active text-silver">
+    <Link
+      to={linkName}
+      className="rounded-full bg-accent px-8 py-3 text-2xl font-semibold text-white transition duration-200 hover:bg-accentHover"
+    >
       {buttonName}
     </Link>
   );

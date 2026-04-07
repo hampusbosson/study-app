@@ -27,6 +27,10 @@ type FormFields = z.infer<typeof schema>;
 
 const SignupPage: React.FC = () => {
   const navigate = useNavigate();
+  const inputClassName =
+    "w-full rounded-lg border border-border bg-surface px-3 py-3 text-text placeholder:text-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-[var(--color-accent-soft)]";
+  const primaryButtonClassName =
+    "w-full rounded-lg bg-accent px-4 py-3 font-semibold text-white transition duration-200 hover:bg-accentHover disabled:cursor-not-allowed disabled:opacity-70";
 
   const {
     register,
@@ -66,28 +70,26 @@ const SignupPage: React.FC = () => {
   const loginRedirect = () => navigate(paths.auth.login.getHref());
 
   return (
-    <div className="w-full flex flex-col justify-center items-center bg-background h-screen">
+    <div className="flex h-screen w-full items-center justify-center bg-background px-4">
       <div className="absolute top-4 left-4 p-2">
         <Logo clickable={true} size={48} />
       </div>
-      <div className="flex flex-col justify-center items-center gap-2 mb-8">
-        <h1 className="text-silver text-4xl md:text-5xl font-bold">
-          Lets get you setup!
-        </h1>
-        <h2 className="text-gray-300 font-semibold">Please sign up with</h2>
-      </div>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-4 w-full justify-center items-center"
-      >
+      <div className="w-full max-w-md rounded-lg border border-border bg-surface px-6 py-8 shadow-sm sm:px-8">
+        <div className="mb-8 flex flex-col items-center gap-2 text-center">
+          <h1 className="text-4xl font-bold text-text md:text-5xl">Let&apos;s get you set up</h1>
+          <h2 className="font-semibold text-muted">
+            Create your account to start building your study workspace.
+          </h2>
+        </div>
+        <form onSubmit={handleSubmit(onSubmit)} className="flex w-full flex-col gap-4">
         <input
           {...register("email")}
           type="text"
           placeholder="Email"
-          className="border border-zinc-600 bg-[#1A1C2999] placeholder-gray-300 p-3 rounded-lg w-72 focus:outline-accent"
+          className={inputClassName}
         />
         {errors.email && (
-          <div className="text-red-500 text-xs w-72 text-left -m-2">
+          <div className="-mt-2 w-full text-left text-xs text-red-500">
             {errors.email.message}
           </div>
         )}
@@ -95,10 +97,10 @@ const SignupPage: React.FC = () => {
           {...register("password")}
           type="password"
           placeholder="Password"
-          className="border border-zinc-600 bg-[#1A1C2999] placeholder-gray-300 p-3 rounded-lg w-72 focus:outline-accent"
+          className={inputClassName}
         />
         {errors.password && (
-          <div className="text-red-500 text-xs w-72 text-left -m-2">
+          <div className="-mt-2 w-full text-left text-xs text-red-500">
             {errors.password.message}
           </div>
         )}
@@ -106,31 +108,31 @@ const SignupPage: React.FC = () => {
           {...register("repeatedPassword")}
           type="password"
           placeholder="Repeat Password"
-          className="border border-zinc-600 bg-[#1A1C2999] placeholder-gray-300 p-3 rounded-lg w-72 focus:outline-accent"
+          className={inputClassName}
         />
         {errors.repeatedPassword && (
-          <div className="text-red-500 text-xs w-72 text-left -m-2">
+          <div className="-mt-2 w-full text-left text-xs text-red-500">
             {errors.repeatedPassword?.message}
           </div>
         )}
 
         {errors.root && (
-          <div className="text-red-500 text-xs w-72 text-left -mt-2">
+          <div className="-mt-2 w-full text-left text-xs text-red-500">
             {errors.root.message}
           </div>
         )}
-        <button
-          disabled={isSubmitting}
-          type="submit"
-          className="bg-transparent text-white py-2 px-4 rounded-lg border-silver border w-72 hover:bg-accent transition duration-200  hover:border-accent font-semibold mt-4"
-        >
+        <button disabled={isSubmitting} type="submit" className={primaryButtonClassName}>
           {isSubmitting ? "Loading..." : "Submit"}
         </button>
       </form>
-      <button className="flex flex-row gap-1 mt-3 group" onClick={loginRedirect}>
-        Already have an account?
-        <p className="underline font-semibold group-hover:text-accent">Login</p>
-      </button>
+        <button
+          className="group mt-4 flex flex-row gap-1 text-sm text-muted transition hover:text-text"
+          onClick={loginRedirect}
+        >
+          Already have an account?
+          <p className="font-semibold underline group-hover:text-accent">Login</p>
+        </button>
+      </div>
     </div>
   );
 };

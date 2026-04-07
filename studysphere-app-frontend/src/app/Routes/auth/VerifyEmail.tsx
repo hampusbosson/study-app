@@ -9,6 +9,8 @@ const VerifyEmail: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { email, password } = location.state;
+  const otpInputClassName =
+    "h-12 w-12 rounded-md border border-border bg-surface text-center text-xl font-medium leading-[3rem] text-text outline-none transition focus:border-accent focus:ring-2 focus:ring-[var(--color-accent-soft)]";
   const [otp, setOtp] = useState<string[]>(new Array(6).fill(""));
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const [errorMessage, setErrorMessage] = useState("");
@@ -98,49 +100,51 @@ const VerifyEmail: React.FC = () => {
   const handleModalClose = () => setModalVisible(false);
 
   return (
-    <div className="bg-background h-screen w-full flex flex-col justify-center items-center">
+    <div className="flex h-screen w-full items-center justify-center bg-background px-4">
       <div className="absolute top-4 left-4 p-2">
         <Logo clickable={true} size={48} />
       </div>
-      <div className="flex flex-col justify-center items-center gap-4">
-        <h1 className="text-4xl font-semibold font-montserrat">
-          Verify Your Email
-        </h1>
-        <h2 className="mt-4">
-          Please enter the 6-digit code sent to your email address.
-        </h2>
-        <div className="flex gap-2">
-          {otp.map((_, index) => (
-            <input
-              key={index}
-              ref={(el) => (inputRefs.current[index] = el)} // Assign each input ref
-              type="text"
-              value={otp[index]}
-              maxLength={1}
-              onChange={(e) => handleChange(e, index)}
-              onKeyDown={(e) => handleKeyDown(e, index)}
-              onPaste={index === 0 ? handlePaste : undefined}
-              className="w-12 h-12 text-center text-xl border border-gray-500 rounded-md outline-none focus:border-silver focus:ring-1 focus:ring-silver bg-transparent text-white leading-[3rem] font-medium"
-            />
-          ))}
+      <div className="w-full max-w-md rounded-lg border border-border bg-surface px-6 py-8 shadow-sm sm:px-8">
+        <div className="flex flex-col items-center gap-4 text-center">
+          <h1 className="font-montserrat text-4xl font-semibold text-text">
+            Verify your email
+          </h1>
+          <h2 className="text-muted">
+            Please enter the 6-digit code sent to your email address.
+          </h2>
+          <div className="flex gap-2">
+            {otp.map((_, index) => (
+              <input
+                key={index}
+                ref={(el) => (inputRefs.current[index] = el)}
+                type="text"
+                value={otp[index]}
+                maxLength={1}
+                onChange={(e) => handleChange(e, index)}
+                onKeyDown={(e) => handleKeyDown(e, index)}
+                onPaste={index === 0 ? handlePaste : undefined}
+                className={otpInputClassName}
+              />
+            ))}
+          </div>
+          {errorMessage && (
+            <p className="w-72 text-center text-xs text-red-500">
+              {errorMessage}
+            </p>
+          )}
+          <button
+            className="mt-2 w-56 rounded-lg bg-accent py-3 font-semibold text-white transition hover:bg-accentHover"
+            onClick={handleVerify}
+          >
+            Verify
+          </button>
+          <button
+            className="w-56 rounded-lg py-2 font-medium text-muted transition hover:bg-surfaceAlt hover:text-text"
+            onClick={handleResendOTP}
+          >
+            Resend Verification Email
+          </button>
         </div>
-        {errorMessage && (
-          <p className="text-red-500 text-xs -mt-2 w-72 text-center">
-            {errorMessage}
-          </p>
-        )}
-        <button
-          className="mt-6 w-56 py-2 bg-transparent text-white border-silver border rounded-lg hover:bg-accent hover:border-accent transition"
-          onClick={handleVerify}
-        >
-          Verify
-        </button>
-        <button
-          className="font-medium mt-1 hover:bg-gray-900 py-2 rounded-lg w-56"
-          onClick={handleResendOTP}
-        >
-          Resend Verification Email
-        </button>
       </div>
       {modalVisible && (
         <ConfirmationModal message={modalMessage} onClose={handleModalClose}/>

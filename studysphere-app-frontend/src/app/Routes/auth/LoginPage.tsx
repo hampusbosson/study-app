@@ -19,6 +19,10 @@ type FormFields = z.infer<typeof schema>;
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
   const { setUser } = useAuth();
+  const inputClassName =
+    "w-full rounded-lg border border-border bg-surface px-3 py-3 text-text placeholder:text-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-[var(--color-accent-soft)]";
+  const primaryButtonClassName =
+    "w-full rounded-lg bg-accent px-4 py-3 font-semibold text-white transition duration-200 hover:bg-accentHover disabled:cursor-not-allowed disabled:opacity-70";
 
   const {
     register,
@@ -62,76 +66,67 @@ const LoginPage: React.FC = () => {
   const resetPasswordRedirect = () => navigate(paths.auth.resetPassword.getHref());
 
   return (
-    <div className="w-full flex flex-col justify-center items-center bg-background h-screen">
+    <div className="flex h-screen w-full items-center justify-center bg-background px-4">
       <div className="absolute top-4 left-4 p-2">
         <Logo clickable={true} size={48} />
       </div>
-      <div className="flex flex-col justify-center items-center gap-2 mb-8">
-        <h1 className="text-silver text-4xl md:text-5xl font-bold">
-          Welcome Back!
-        </h1>
-        <h2 className="text-gray-300 font-semibold">Please login with</h2>
-      </div>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-4 w-full justify-center items-center"
-      >
-        <input
-          {...register("email")}
-          type="text"
-          placeholder="Email Address"
-          className="border border-zinc-600 bg-[#1A1C2999] placeholder-gray-300 p-3 rounded-lg w-72 focus:outline-accent"
-        />
-        {errors.email && (
-          <div className="text-red-500 text-xs w-72 text-left -m-2">
-            {errors.email.message}
-          </div>
-        )}
-
-        <input
-          {...register("password")}
-          type="password"
-          placeholder="Password"
-          className="border border-zinc-600 bg-[#1A1C2999] placeholder-gray-300 p-3 rounded-lg w-72 focus:outline-accent"
-        />
-        {errors.password && (
-          <div className="text-red-500 text-xs w-72 text-left -m-2">
-            {errors.password.message}
-          </div>
-        )}
-
-        {errors.root && (
-          <div className="text-red-500 text-xs w-72 text-left -mt-2">
-            {errors.root.message}
-          </div>
-        )}
-        <div className="w-72 -mt-3">
-          <button
-            className="underline text-left text-sm pl-1 font-medium text-gray-300"
-            onClick={resetPasswordRedirect}
-            type="button"
-          >
-            Forgot your password?
-          </button>
+      <div className="w-full max-w-md rounded-lg border border-border bg-surface px-6 py-8 shadow-sm sm:px-8">
+        <div className="mb-8 flex flex-col items-center gap-2 text-center">
+          <h1 className="text-4xl font-bold text-text md:text-5xl">Welcome back</h1>
+          <h2 className="font-semibold text-muted">Log in to continue studying.</h2>
         </div>
+        <form onSubmit={handleSubmit(onSubmit)} className="flex w-full flex-col gap-4">
+          <input
+            {...register("email")}
+            type="text"
+            placeholder="Email Address"
+            className={inputClassName}
+          />
+          {errors.email && (
+            <div className="-mt-2 w-full text-left text-xs text-red-500">
+              {errors.email.message}
+            </div>
+          )}
 
+          <input
+            {...register("password")}
+            type="password"
+            placeholder="Password"
+            className={inputClassName}
+          />
+          {errors.password && (
+            <div className="-mt-2 w-full text-left text-xs text-red-500">
+              {errors.password.message}
+            </div>
+          )}
+
+          {errors.root && (
+            <div className="-mt-2 w-full text-left text-xs text-red-500">
+              {errors.root.message}
+            </div>
+          )}
+          <div className="-mt-2">
+            <button
+              className="pl-1 text-left text-sm font-medium text-muted underline transition hover:text-text"
+              onClick={resetPasswordRedirect}
+              type="button"
+            >
+              Forgot your password?
+            </button>
+          </div>
+
+          <button disabled={isSubmitting} type="submit" className={primaryButtonClassName}>
+            {isSubmitting ? "Loading..." : "Login"}
+          </button>
+        </form>
         <button
-          disabled={isSubmitting}
-          type="submit"
-          className="bg-transparent text-white py-2 px-4 rounded-lg border-silver border w-72 hover:bg-accent transition duration-200 hover:border-accent font-semibold mt-4"
+          className="group mt-4 flex flex-row gap-1 text-sm text-muted transition hover:text-text"
+          onClick={signupRedirect}
         >
-          {isSubmitting ? "Loading..." : "Login"}
+          Dont have an account?
+          <p className="font-semibold underline group-hover:text-accent">Sign Up</p>
         </button>
-      </form>
-      <button
-        className="flex flex-row gap-1 mt-3 group"
-        onClick={signupRedirect}
-      >
-        Dont have an account?
-        <p className="underline font-semibold group-hover:text-accent">
-          Sign Up
-        </p>
-      </button>
+      </div>
     </div>
   );
 };

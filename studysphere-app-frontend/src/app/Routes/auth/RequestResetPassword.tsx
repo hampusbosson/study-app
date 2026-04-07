@@ -5,6 +5,10 @@ import { AxiosError } from "axios";
 import ConfirmationModal from "../../../features/auth/components/ConfirmationModal";
 
 const RequestResetPassword: React.FC = () => {
+  const inputClassName =
+    "w-full rounded-lg border border-border bg-surface px-3 py-3 text-text placeholder:text-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-[var(--color-accent-soft)]";
+  const primaryButtonClassName =
+    "w-full rounded-lg bg-accent px-4 py-3 font-semibold text-white transition duration-200 hover:bg-accentHover disabled:cursor-not-allowed disabled:opacity-70";
   const [email, setEmail] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
@@ -39,36 +43,30 @@ const RequestResetPassword: React.FC = () => {
   };
 
   return (
-    <div className="w-full flex flex-col justify-center items-center bg-background h-screen">
+    <div className="flex h-screen w-full items-center justify-center bg-background px-4">
       <div className="absolute top-4 left-4 p-2">
         <Logo clickable={true} size={48} />
       </div>
-      <div className="flex flex-col justify-center items-center gap-2 mb-6">
-        <h1 className="text-silver text-4xl md:text-5xl font-bold">
-          Reset Password
-        </h1>
-        <h2 className="text-gray-300 font-semibold">
-          Please enter your email adress
-        </h2>
+      <div className="w-full max-w-md rounded-lg border border-border bg-surface px-6 py-8 shadow-sm sm:px-8">
+        <div className="mb-6 flex flex-col items-center gap-2 text-center">
+          <h1 className="text-4xl font-bold text-text md:text-5xl">Reset password</h1>
+          <h2 className="font-semibold text-muted">
+            Enter your email address and we&apos;ll send you a reset link.
+          </h2>
+        </div>
+        <form onSubmit={handleSubmit} className="flex w-full flex-col gap-4">
+          <input
+            type="text"
+            placeholder="Email Address"
+            className={inputClassName}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <button type="submit" className={primaryButtonClassName}>
+            {loading ? "Loading.." : "Reset Password"}
+          </button>
+        </form>
       </div>
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col gap-4 w-full justify-center items-center"
-      >
-        <input
-          type="text"
-          placeholder="Email Address"
-          className="border border-zinc-600 bg-[#1A1C2999] placeholder-gray-300 p-3 rounded-lg w-72 focus:outline-accent"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <button
-          type="submit"
-          className="bg-transparent text-white py-2 px-4 rounded-lg border-silver border w-72 hover:bg-accent transition duration-200 hover:border-accent font-semibold mt-2"
-        >
-          {loading ? "Loading.." : "Reset Password"}
-        </button>
-      </form>
       {modalVisible && (
         <ConfirmationModal message={modalMessage} onClose={handleModalClose} />
       )}
