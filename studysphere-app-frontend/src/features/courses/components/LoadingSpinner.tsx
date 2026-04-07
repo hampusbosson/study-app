@@ -52,7 +52,7 @@ const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ type }) => {
   }, [messages]);
 
   return (
-    <div className="flex h-full flex-col items-center justify-center gap-3 rounded-lg border border-border bg-white py-20 shadow-sm">
+    <div className="flex h-full flex-col items-center justify-center gap-3 rounded-lg border border-border bg-surface py-20 shadow-sm">
       {icons.loadingIcon}
       <p
         className={`text-lg font-semibold text-slate-500 transition-opacity duration-500 ${fade ? "opacity-100" : "opacity-0"}`}

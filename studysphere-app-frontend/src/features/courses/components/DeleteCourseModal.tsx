@@ -13,11 +13,11 @@ const DeleteCourseModal: React.FC<DeleteCourseModalProps> = ({
 }) => {
   return (
     <div
-      className="fixed inset-0 bg-black bg-opacity-20 backdrop-blur-sm flex justify-center items-center z-50"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
       onClick={onClose}
     >
       <div
-        className="bg-background border-gray-600 border w-[40rem] p-4 rounded-lg shadow-lg flex flex-col items-center gap-4"
+        className="flex w-[40rem] flex-col items-center gap-4 rounded-lg border border-border bg-surface p-4 text-text shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         <h1 className="text-lg">
@@ -27,12 +27,12 @@ const DeleteCourseModal: React.FC<DeleteCourseModalProps> = ({
         <div className="flex flex-row gap-3 w-full justify-end">
           <button
             onClick={onClose}
-            className="bg-accent rounded-lg py-1 px-4 font-medium hover:bg-accentHover"
+            className="rounded-lg bg-accent px-4 py-1 font-medium text-slate-950 hover:bg-accentHover dark:text-white"
           >
             Cancel
           </button>
           <button
-            className="bg-red-700 rounded-lg py-1 px-4 font-medium hover:bg-red-800"
+            className="rounded-lg bg-red-700 px-4 py-1 font-medium text-white hover:bg-red-800"
             onClick={handleDelete}
           >
             Delete

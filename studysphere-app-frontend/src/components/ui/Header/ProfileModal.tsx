@@ -29,9 +29,9 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ email }) => {
     }
 
   return (
-    <div className="flex w-64 justify-start rounded-lg border border-border bg-white shadow-2xl shadow-slate-200/70">
+    <div className="flex w-64 justify-start rounded-lg border border-border bg-surface shadow-2xl shadow-black/20">
       <div className="flex flex-col items-start w-full">
-      <p className="w-full max-w-[16rem] truncate px-4 pb-3 pt-4 font-raleway text-sm font-medium text-slate-600">
+      <p className="w-full max-w-[16rem] truncate px-4 pb-3 pt-4 font-raleway text-sm font-medium text-muted">
           {email}
         </p>
         <div className="flex w-full flex-col border-t border-border">

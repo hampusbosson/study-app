@@ -17,7 +17,7 @@ const CourseOverview: React.FC = () => {
     };
 
   return (
-    <div className="rounded-lg border border-border bg-white p-6 shadow-sm">
+    <div className="rounded-lg border border-border bg-surface p-6 shadow-sm">
       <div className="flex items-center justify-between gap-4">
         <div>
           <p className="text-sm font-semibold uppercase tracking-normal text-accent">Courses</p>
@@ -32,11 +32,11 @@ const CourseOverview: React.FC = () => {
     <div
       key={course.id}
       onClick={() => handleCourseClick(course.id)}
-      className="cursor-pointer rounded-lg border border-border bg-slate-50 p-5 transition hover:-translate-y-0.5 hover:border-blue-200 hover:bg-white hover:shadow-lg hover:shadow-blue-100/70"
+      className="cursor-pointer rounded-lg border border-border bg-surfaceAlt p-5 transition hover:-translate-y-0.5 hover:border-accent hover:bg-surface hover:shadow-lg hover:shadow-black/10"
     >
       <div className="flex items-start justify-between gap-3">
         <p className="text-base font-semibold text-text">{course.name}</p>
-        <span className="rounded-full bg-white px-2 py-1 text-xs font-semibold text-muted">
+        <span className="rounded-full bg-surface px-2 py-1 text-xs font-semibold text-muted">
           {(course.lectures?.length || 0).toString().padStart(2, "0")}
         </span>
       </div>

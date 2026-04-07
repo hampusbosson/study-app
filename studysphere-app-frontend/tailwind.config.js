@@ -9,18 +9,18 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: "#f4f7fb",
-        backgroundOverlay: "#ffffffb3",
-        card: "#ffffff",
-        surface: "#ffffff",
-        surfaceAlt: "#eef4ff",
-        border: "#d8e1f0",
-        text: "#0f172a",
-        muted: "#64748b",
-        accent: "#2563eb",
-        accentHover: "#1d4ed8",
-        accentSoft: "#dbeafe",
-        silver: "#e2e8f0",
+        background: "var(--color-background)",
+        backgroundOverlay: "var(--color-background-overlay)",
+        card: "var(--color-card)",
+        surface: "var(--color-surface)",
+        surfaceAlt: "var(--color-surface-alt)",
+        border: "var(--color-border)",
+        text: "var(--color-text)",
+        muted: "var(--color-muted)",
+        accent: "var(--color-accent)",
+        accentHover: "var(--color-accent-hover)",
+        accentSoft: "var(--color-accent-soft)",
+        silver: "var(--color-silver)",
       },
       backgroundImage: {
         "accent-gradient":

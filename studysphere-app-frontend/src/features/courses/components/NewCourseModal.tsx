@@ -44,11 +44,11 @@ const NewCourseModal: React.FC<NewCourseModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 bg-gray-800/50  backdrop-blur-xs flex justify-center items-center z-50"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs"
       onClick={onClose}
     >
       <div
-        className="bg-background border-gray-600 border w-96 p-6 rounded-lg shadow-lg flex flex-col items-center"
+        className="flex w-96 flex-col items-center rounded-lg border border-border bg-surface p-6 text-text shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         <h2 className="text-xl font-bold">Whats the name of your course?</h2>
@@ -70,12 +70,12 @@ const NewCourseModal: React.FC<NewCourseModalProps> = ({
             <button
               onClick={onClose}
               type="button"
-              className="px-5 py-2 rounded-lg hover:bg-gray-700 transition font-semibold"
+              className="rounded-lg px-5 py-2 font-semibold text-text transition hover:bg-surfaceAlt"
             >
               Cancel
             </button>
             <button
-              className="px-5 py-2 bg-accent text-white rounded-lg hover:bg-accentHover font-semibold transition"
+              className="rounded-lg bg-accent px-5 py-2 font-semibold text-slate-950 transition hover:bg-accentHover dark:text-white"
               type="submit"
             >
               Create

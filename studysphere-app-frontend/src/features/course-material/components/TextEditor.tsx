@@ -38,16 +38,16 @@ const MenuBar: React.FC<MenuBarProps> = ({ editor }) => {
   }
 
   return (
-    <div className="flex items-center justify-center border-b border-border bg-slate-50 px-4 py-4">
+    <div className="flex items-center justify-center border-b border-border bg-surfaceAlt px-4 py-4">
       <div className="flex flex-row flex-wrap gap-3">
         <button
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 1 }).run()
           }
-          className={`rounded-lg p-2 transition ${
+          className={`editor-tool rounded-lg p-2 transition ${
             editor.isActive("heading", { level: 1 })
               ? "is-active"
-              : "text-slate-700 hover:bg-slate-200"
+              : ""
           }`}
         >
           {icons.h1Icon(editor.isActive("heading", { level: 1 }))}
@@ -56,10 +56,10 @@ const MenuBar: React.FC<MenuBarProps> = ({ editor }) => {
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 2 }).run()
           }
-          className={`rounded-lg p-2 transition ${
+          className={`editor-tool rounded-lg p-2 transition ${
             editor.isActive("heading", { level: 2 })
               ? "is-active"
-              : "text-slate-700 hover:bg-slate-200"
+              : ""
           }`}
         >
           {icons.h2Icon(editor.isActive("heading", { level: 2 }))}
@@ -68,100 +68,100 @@ const MenuBar: React.FC<MenuBarProps> = ({ editor }) => {
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 3 }).run()
           }
-          className={`rounded-lg p-2 transition ${
+          className={`editor-tool rounded-lg p-2 transition ${
             editor.isActive("heading", { level: 3 })
               ? "is-active"
-              : "text-slate-700 hover:bg-slate-200"
+              : ""
           }`}
         >
           {icons.h3Icon(editor.isActive("heading", { level: 3 }))}
         </button>
         <button
           onClick={() => editor.chain().focus().setParagraph().run()}
-          className={`rounded-lg p-2 transition ${
+          className={`editor-tool rounded-lg p-2 transition ${
             editor.isActive("paragraph")
               ? "is-active"
-              : "text-slate-700 hover:bg-slate-200"
+              : ""
           }`}
         >
           {icons.textIcon(editor.isActive("paragraph"))}
         </button>
         <button
           onClick={() => editor.chain().focus().toggleBold().run()}
-          className={`rounded-lg p-2 transition ${
+          className={`editor-tool rounded-lg p-2 transition ${
             editor.isActive("bold")
               ? "is-active"
-              : "text-slate-700 hover:bg-slate-200"
+              : ""
           }`}
         >
           {icons.boldIcon(editor.isActive("bold"))}
         </button>
         <button
           onClick={() => editor.chain().focus().toggleItalic().run()}
-          className={`rounded-lg p-2 transition ${
+          className={`editor-tool rounded-lg p-2 transition ${
             editor.isActive("italic")
               ? "is-active"
-              : "text-slate-700 hover:bg-slate-200"
+              : ""
           }`}
         >
           {icons.italicIcon(editor.isActive("italic"))}
         </button>
         <button
           onClick={() => editor.chain().focus().toggleStrike().run()}
-          className={`rounded-lg p-2 transition ${
+          className={`editor-tool rounded-lg p-2 transition ${
             editor.isActive("strike")
               ? "is-active"
-              : "text-slate-700 hover:bg-slate-200"
+              : ""
           }`}
         >
           {icons.strikeIcon(editor.isActive("strike"))}
         </button>
         <button
           onClick={() => editor.chain().focus().toggleHighlight().run()}
-          className={`rounded-lg p-2 transition ${
+          className={`editor-tool rounded-lg p-2 transition ${
             editor.isActive("highlight")
               ? "is-active"
-              : "text-slate-700 hover:bg-slate-200"
+              : ""
           }`}
         >
           {icons.highlightIcon(editor.isActive("highlight"))}
         </button>
         <button
           onClick={() => editor.chain().focus().setTextAlign("left").run()}
-          className={`rounded-lg p-2 transition ${
+          className={`editor-tool rounded-lg p-2 transition ${
             editor.isActive({ textAlign: "left" })
               ? "is-active"
-              : "text-slate-700 hover:bg-slate-200"
+              : ""
           }`}
         >
           {icons.alignLeftIcon(editor.isActive({ textAlign: "left" }))}
         </button>
         <button
           onClick={() => editor.chain().focus().setTextAlign("center").run()}
-          className={`rounded-lg p-2 transition ${
+          className={`editor-tool rounded-lg p-2 transition ${
             editor.isActive({ textAlign: "center" })
               ? "is-active"
-              : "text-slate-700 hover:bg-slate-200"
+              : ""
           }`}
         >
           {icons.alignCenterIcon(editor.isActive({ textAlign: "center" }))}
         </button>
         <button
           onClick={() => editor.chain().focus().setTextAlign("right").run()}
-          className={`rounded-lg p-2 transition ${
+          className={`editor-tool rounded-lg p-2 transition ${
             editor.isActive({ textAlign: "right" })
               ? "is-active"
-              : "text-slate-700 hover:bg-slate-200"
+              : ""
           }`}
         >
           {icons.alignRightIcon(editor.isActive({ textAlign: "right" }))}
         </button>
         <button
           onClick={() => editor.chain().focus().setTextAlign("justify").run()}
-          className={`rounded-lg p-2 transition ${
+          className={`editor-tool rounded-lg p-2 transition ${
             editor.isActive({ textAlign: "justify" })
               ? "is-active"
-              : "text-slate-700 hover:bg-slate-200"
+              : ""
           }`}
         >
           {icons.alignJustifyIcon(
@@ -170,20 +170,20 @@ const MenuBar: React.FC<MenuBarProps> = ({ editor }) => {
         </button>
         <button
           onClick={() => editor.chain().focus().toggleBulletList().run()}
-          className={`rounded-lg p-2 transition ${
+          className={`editor-tool rounded-lg p-2 transition ${
             editor.isActive("bulletList")
               ? "is-active"
-              : "text-slate-700 hover:bg-slate-200"
+              : ""
           }`}
         >
           {icons.bulletListIcon(editor.isActive("bulletList"))}
         </button>
         <button
           onClick={() => editor.chain().focus().toggleOrderedList().run()}
-          className={`rounded-lg p-2 transition ${
+          className={`editor-tool rounded-lg p-2 transition ${
             editor.isActive("orderedList")
               ? "is-active"
-              : "text-slate-700 hover:bg-slate-200"
+              : ""
           }`}
           >
            {icons.orderedListIcon(editor.isActive("orderedList"))}
@@ -222,7 +222,7 @@ export const Tiptap: React.FC<TipTapProps> = ({ content }) => {
   }, [content, editor]);
 
   return (
-    <div className="textEditor overflow-auto rounded-lg border border-border bg-white shadow-sm">
+    <div className="textEditor overflow-auto rounded-lg border border-border bg-surface shadow-sm">
       <MenuBar editor={editor} />
       <EditorContent editor={editor} className="px-6 py-6" />
     </div>

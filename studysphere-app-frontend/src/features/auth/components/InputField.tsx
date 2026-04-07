@@ -26,14 +26,14 @@ const InputField: React.FC<InputFieldProps> = ({
 
   return (
     <div className="flex flex-col gap-2">
-      {label && <label className="text-gray-300 font-medium">{label}</label>}
+      {label && <label className="font-medium text-text">{label}</label>}
       <input
         type={type}
         value={value}
         placeholder={placeholder}
         onChange={(e) => onValueChange(e.target.value)} // Handle value changes
         onKeyPress={handleKeyPress} // Handle Enter key press
-        className="border border-zinc-600 bg-[#1A1C2999] placeholder-gray-400 p-3 rounded-lg w-72 focus:outline-accent"
+        className="w-72 rounded-lg border border-border bg-surface px-3 py-3 text-text placeholder:text-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-[var(--color-accent-soft)]"
       />
     </div>
   );

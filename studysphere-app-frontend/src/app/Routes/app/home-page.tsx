@@ -84,19 +84,19 @@ const HomePage: React.FC = () => {
         </section>
         <div className="grid gap-8 xl:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)]">
           <CourseOverview />
-          <section className="rounded-lg border border-border bg-white p-6 shadow-sm">
+          <section className="rounded-lg border border-border bg-surface p-6 shadow-sm">
             <p className="text-sm font-semibold uppercase tracking-normal text-accent">Study workflow</p>
             <h2 className="mt-3 font-montserrat text-2xl font-bold text-text">Your demo flow is already here.</h2>
             <div className="mt-6 space-y-4">
-              <div className="rounded-lg bg-slate-50 px-4 py-4">
+              <div className="rounded-lg bg-surfaceAlt px-4 py-4">
                 <p className="text-sm font-semibold text-text">1. Create a course</p>
                 <p className="mt-1 text-sm text-muted">Set up each subject as its own workspace.</p>
               </div>
-              <div className="rounded-lg bg-slate-50 px-4 py-4">
+              <div className="rounded-lg bg-surfaceAlt px-4 py-4">
                 <p className="text-sm font-semibold text-text">2. Add a lecture URL</p>
                 <p className="mt-1 text-sm text-muted">Pull in a PDF or public document and save it to the course.</p>
               </div>
-              <div className="rounded-lg bg-slate-50 px-4 py-4">
+              <div className="rounded-lg bg-surfaceAlt px-4 py-4">
                 <p className="text-sm font-semibold text-text">3. Read and summarize</p>
                 <p className="mt-1 text-sm text-muted">Switch between source material and an AI-generated summary.</p>
               </div>

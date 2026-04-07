@@ -84,7 +84,7 @@ const LecturePage: React.FC = () => {
 
   return (
     <div className="min-w-0">
-      <div className="mb-6 rounded-lg border border-border bg-white p-6 shadow-sm">
+      <div className="mb-6 rounded-lg border border-border bg-surface p-6 shadow-sm">
       <div className="flex flex-row gap-2 text-sm text-muted">
         <button onClick={handleClassClick}>{activeCourse?.name}</button>
         <p> / </p>

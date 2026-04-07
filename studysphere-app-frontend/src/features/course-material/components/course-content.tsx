@@ -31,11 +31,11 @@ const CourseContent: React.FC<CourseContentProps> = ({
     <div className="pb-1">
       <div className={activeState === "pdf" ? "block" : "hidden"}>
         {lectureUrl ? (
-          <div className="rounded-lg border border-border bg-white p-5 shadow-sm">
+          <div className="rounded-lg border border-border bg-surface p-5 shadow-sm">
             <PdfViewer url={proxyUrl} />
           </div>
         ) : (
-          <div className="rounded-lg border border-dashed border-slate-300 bg-white px-6 py-16 text-center shadow-sm">
+          <div className="rounded-lg border border-dashed border-border bg-surface px-6 py-16 text-center shadow-sm">
             <p className="text-lg font-semibold text-text">No source document attached</p>
             <p className="mt-2 text-sm text-muted">Add a lecture URL to read the original material here.</p>
           </div>

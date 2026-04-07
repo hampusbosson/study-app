@@ -171,7 +171,7 @@ const SideBar: React.FC<SideBarProps> = ({
   };
 
   return (
-    <div className="h-full rounded-lg border border-border bg-white p-4 shadow-sm">
+    <div className="h-full rounded-lg border border-border bg-surface p-4 shadow-sm">
       <div className="sticky top-2 z-10">
       <p className="text-sm font-semibold uppercase tracking-normal text-accent">Library</p>
       <p className="mb-5 mt-2 font-montserrat text-xl font-bold text-text">My courses</p>

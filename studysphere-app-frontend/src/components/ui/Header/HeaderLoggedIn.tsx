@@ -4,6 +4,7 @@ import ProfileModal from "./ProfileModal";
 import useAuth from "../../../hooks/auth/useAuth";
 import { useLocation, useNavigate } from "react-router-dom";
 import { paths } from "../../../config/paths";
+import useTheme from "../../../hooks/theme/useTheme";
 
 const HeaderLoggedIn: React.FC = () => {
   const navigate = useNavigate();
@@ -11,6 +12,7 @@ const HeaderLoggedIn: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
   const { user } = useAuth();
+  const { theme, toggleTheme } = useTheme();
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -55,19 +57,19 @@ const HeaderLoggedIn: React.FC = () => {
     navigate(paths.app.calendar.getHref());
   }
   return (
-    <div className="sticky top-0 z-40 border-b border-border/80 bg-white/85 backdrop-blur-xl">
+    <div className="sticky top-0 z-40 border-b border-border/80 bg-backgroundOverlay backdrop-blur-xl">
       <div className="mx-auto flex w-full max-w-[1600px] items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-6">
           <div>
             <p className="font-montserrat text-xl font-bold text-text">StudySphere</p>
             <p className="text-sm text-muted">Focused study, clearer notes.</p>
           </div>
-          <div className="flex items-center gap-2 rounded-full border border-border bg-slate-50 p-1">
+          <div className="flex items-center gap-2 rounded-full border border-border bg-surfaceAlt p-1">
             <button
               onClick={handleHomeClick}
               className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
                 activeButton === "home"
-                  ? "bg-white text-accent shadow-sm"
+                  ? "bg-surface text-accent shadow-sm"
                   : "text-muted hover:text-text"
               }`}
             >
@@ -77,7 +79,7 @@ const HeaderLoggedIn: React.FC = () => {
               onClick={handleCoursesClick}
               className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
                 activeButton === "courses"
-                  ? "bg-white text-accent shadow-sm"
+                  ? "bg-surface text-accent shadow-sm"
                   : "text-muted hover:text-text"
               }`}
             >
@@ -87,7 +89,7 @@ const HeaderLoggedIn: React.FC = () => {
               onClick={handleCalendarClick}
               className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
                 activeButton === "calendar"
-                  ? "bg-white text-accent shadow-sm"
+                  ? "bg-surface text-accent shadow-sm"
                   : "text-muted hover:text-text"
               }`}
             >
@@ -96,6 +98,12 @@ const HeaderLoggedIn: React.FC = () => {
           </div>
         </div>
         <div className="flex items-center gap-3">
+          <button
+            onClick={toggleTheme}
+            className="rounded-lg border border-border bg-surface px-3 py-2 text-sm font-semibold text-text transition hover:bg-surfaceAlt"
+          >
+            {theme === "dark" ? "Light mode" : "Dark mode"}
+          </button>
           <div className="hidden text-right sm:block">
             <p className="text-sm font-semibold text-text">Welcome back</p>
             <p className="max-w-56 truncate text-sm text-muted">{user?.email}</p>

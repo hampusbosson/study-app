@@ -99,13 +99,13 @@ const Toolbar: React.FC<ToolbarProps> = ({
 
 
   return (
-    <div className="flex flex-col gap-4 rounded-lg border border-border bg-white p-4 shadow-sm lg:flex-row lg:items-center lg:justify-between">
+    <div className="flex flex-col gap-4 rounded-lg border border-border bg-surface p-4 shadow-sm lg:flex-row lg:items-center lg:justify-between">
       <div className="flex flex-wrap gap-2">
         <button
           className={`flex flex-row items-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold transition ${
             activeButton === "pdf"
               ? "bg-slate-900 text-white"
-              : "bg-slate-50 text-slate-600 hover:bg-slate-100"
+              : "bg-surfaceAlt text-muted hover:bg-surfaceAlt hover:text-text"
           }`}
           onClick={handlePdfClick}
         >
@@ -116,7 +116,7 @@ const Toolbar: React.FC<ToolbarProps> = ({
           className={`flex flex-row items-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold transition ${
             activeButton === "summary"
               ? "bg-slate-900 text-white"
-              : "bg-slate-50 text-slate-600 hover:bg-slate-100"
+              : "bg-surfaceAlt text-muted hover:bg-surfaceAlt hover:text-text"
           }`}
           onClick={handleSummaryClick}
         >
@@ -127,7 +127,7 @@ const Toolbar: React.FC<ToolbarProps> = ({
           className={`flex flex-row items-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold transition ${
             activeButton === "quiz"
               ? "bg-slate-900 text-white"
-              : "bg-slate-50 text-slate-600 hover:bg-slate-100"
+              : "bg-surfaceAlt text-muted hover:bg-surfaceAlt hover:text-text"
           }`}
           onClick={handleQuizClick}
         >
@@ -141,7 +141,7 @@ const Toolbar: React.FC<ToolbarProps> = ({
             e.stopPropagation();
             handleEditClick();
           }}
-          className="rounded-lg bg-slate-50 p-3 text-slate-500 transition hover:bg-slate-100 hover:text-text"
+          className="rounded-lg border border-border bg-surfaceAlt p-3 text-muted transition hover:bg-surface hover:text-text"
         >
           {icons.editIcon(5)}
         </button>
@@ -150,7 +150,7 @@ const Toolbar: React.FC<ToolbarProps> = ({
             e.stopPropagation();
             openDeleteModal();
           }}
-          className="rounded-lg bg-rose-50 p-3 text-rose-600 transition hover:bg-rose-100"
+          className="rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-red-300 transition hover:bg-red-500/20 hover:text-red-200"
         >
           {icons.deleteIcon(5)}
         </button>

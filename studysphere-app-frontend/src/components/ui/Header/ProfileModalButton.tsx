@@ -16,7 +16,7 @@ const ProfileModalButton: React.FC<ProfileModalButtonProps> = ({
   return (
     <button
       onClick={onPress}
-      className={`flex w-full items-center gap-3 px-4 py-3 text-left text-sm font-semibold text-slate-700 transition hover:bg-slate-50 hover:text-slate-950 ${className}`}
+      className={`flex w-full items-center gap-3 px-4 py-3 text-left text-sm font-semibold text-text transition hover:bg-surfaceAlt ${className}`}
     >
       {icon}
       {name}

@@ -68,8 +68,8 @@ const CourseItem: React.FC<CourseItemProps> = ({
     <li
       className={`cursor-pointer rounded-lg border px-3 py-3 transition ${
         activeCourse?.name === courseItem.name
-          ? "border-blue-200 bg-blue-50 text-text"
-          : "border-transparent text-slate-600 hover:border-slate-200 hover:bg-slate-50 hover:text-text"
+          ? "border-accent bg-accentSoft text-text"
+          : "border-transparent text-muted hover:border-border hover:bg-surfaceAlt hover:text-text"
       }`}
       onClick={() => handleCourseClick(courseItem)}
       onMouseEnter={() => setHoveredCourse(courseItem.name)}
@@ -94,7 +94,7 @@ const CourseItem: React.FC<CourseItemProps> = ({
                 type="text"
                 value={editValues[courseItem.name] || ""}
                 onChange={(e) => handleChange(e, courseItem.name)}
-                className="w-[90%] border-b border-slate-300 bg-transparent text-sm font-semibold text-text focus:outline-none"
+                className="w-[90%] border-b border-border bg-transparent text-sm font-semibold text-text focus:outline-none"
               />
             </form>
           </div>
@@ -102,7 +102,7 @@ const CourseItem: React.FC<CourseItemProps> = ({
           <div className="flex flex-row gap-2 items-center">
             <button
               type="button"
-              className="text-slate-400 hover:text-text"
+              className="text-muted hover:text-text"
               onClick={(e) => {
                 e.stopPropagation();
                 if (listOpen?.[courseItem.name]) {
@@ -151,7 +151,7 @@ const CourseItem: React.FC<CourseItemProps> = ({
         <ul
           className={`ml-6 mt-3 flex w-[90%] flex-col ${
             currentLectures && currentLectures.length > 0
-              ? "gap-2 border-l border-slate-200 pl-3"
+              ? "gap-2 border-l border-border pl-3"
               : ""
           }`}
         >
