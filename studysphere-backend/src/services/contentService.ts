@@ -7,6 +7,13 @@ const client = new OpenAI({
   apiKey: process.env.OPENAI_KEY || process.env.OPENAI_API_KEY,
 });
 
+export interface QuizQuestion {
+  question: string;
+  options: string[];
+  correctAnswer: string;
+  explanation: string;
+}
+
 export const fetchContentFromURL = async (url: string): Promise<string> => {
   try {
     console.time("Fetch Request");
@@ -80,6 +87,50 @@ export const summarizeContent = async (content: string): Promise<string> => {
   }
 };
 
+export const generateQuizFromContent = async (
+  content: string,
+): Promise<QuizQuestion[]> => {
+  if (!content.trim()) {
+    throw new Error("No lecture content available for quiz generation.");
+  }
+
+  try {
+    const trimmedContent = content.slice(0, 12000);
+    const response = await client.chat.completions.create({
+      model: "o3-mini-2025-01-31",
+      messages: [
+        {
+          role: "system",
+          content:
+            "You create multiple-choice study quizzes from lecture material. " +
+            "Return valid JSON only with this shape: " +
+            '{"questions":[{"question":"string","options":["string","string","string","string"],"correctAnswer":"string","explanation":"string"}]}. ' +
+            "Generate 8 questions. Each question must have exactly 4 answer options. " +
+            "The correctAnswer must match one of the options exactly. " +
+            "Make distractors plausible. Keep explanations concise and useful for learning.",
+        },
+        {
+          role: "user",
+          content: trimmedContent,
+        },
+      ],
+      max_completion_tokens: 4000,
+    });
+
+    const rawContent = response.choices[0]?.message?.content || "";
+    const parsed = extractQuizQuestions(rawContent);
+
+    if (parsed.length === 0) {
+      throw new Error("The model did not return any quiz questions.");
+    }
+
+    return parsed;
+  } catch (error) {
+    console.error("Error generating quiz content:", error);
+    throw new Error("Failed to generate quiz.");
+  }
+};
+
 // Utility function to split text into chunks
 const splitContentIntoChunks = (
   text: string,
@@ -90,6 +141,46 @@ const splitContentIntoChunks = (
     chunks.push(text.slice(i, i + maxChunkSize));
   }
   return chunks;
+};
+
+const extractQuizQuestions = (rawContent: string): QuizQuestion[] => {
+  const cleaned = rawContent
+    .replace(/^```json\s*/i, "")
+    .replace(/^```\s*/i, "")
+    .replace(/\s*```$/, "")
+    .trim();
+
+  const parsed = JSON.parse(cleaned) as { questions?: QuizQuestion[] };
+  const questions = parsed.questions || [];
+
+  return questions
+    .map((question) => normalizeQuizQuestion(question))
+    .filter((question): question is QuizQuestion => question !== null);
+};
+
+const normalizeQuizQuestion = (question: QuizQuestion): QuizQuestion | null => {
+  const prompt = question.question?.trim();
+  const options = (question.options || [])
+    .map((option) => option.trim())
+    .filter(Boolean)
+    .slice(0, 4);
+  const correctAnswer = question.correctAnswer?.trim();
+  const explanation = question.explanation?.trim();
+
+  if (!prompt || options.length !== 4 || !correctAnswer || !explanation) {
+    return null;
+  }
+
+  if (!options.includes(correctAnswer)) {
+    return null;
+  }
+
+  return {
+    question: prompt,
+    options,
+    correctAnswer,
+    explanation,
+  };
 };
 
 const formatTextToHTML = (content: string): string => {

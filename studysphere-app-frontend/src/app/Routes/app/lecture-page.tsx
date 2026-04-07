@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Lecture } from "../../../types/api";
+import { Lecture, QuizQuestion } from "../../../types/api";
 import { useNavigate, useParams } from "react-router-dom";
 import CourseContent from "../../../features/course-material/components/course-content";
 import Toolbar from "../../../features/course-material/components/toolbar";
@@ -7,6 +7,7 @@ import { paths } from "../../../config/paths";
 import { useCourses } from "../../../hooks/courses/use-courses";
 import getLecture from "../../../features/course-material/api/get-lecture";
 import { summarizeLecture } from "../../../features/course-material/api/summarize-lecture";
+import { generateQuiz } from "../../../features/course-material/api/generate-quiz";
 
 const LecturePage: React.FC = () => {
   const navigate = useNavigate();
@@ -15,6 +16,8 @@ const LecturePage: React.FC = () => {
   const [activeButton, setActiveButton] = useState("pdf");
   const [summarizedContent, setSummarizedContent] = useState("");
   const [summaryLoading, setSummaryLoading] = useState(false);
+  const [quizLoading, setQuizLoading] = useState(false);
+  const [quizQuestions, setQuizQuestions] = useState<QuizQuestion[]>([]);
   const [lecture, setLecture] = useState<Lecture>();
   const { activeCourse, setActiveCourse } = useCourses();
   const lectureUrl = lecture?.url;
@@ -32,6 +35,7 @@ const LecturePage: React.FC = () => {
         return;
       }
       try {
+        setQuizQuestions([]);
         const fetchedLecture = await getLecture(activeCourse.id, lectureId);
         setLecture(fetchedLecture);
         setSummarizedContent(fetchedLecture.summarizedContent || "");
@@ -54,6 +58,22 @@ const LecturePage: React.FC = () => {
       console.error("Error summarizing content:", error);
     } finally {
       setSummaryLoading(false);
+    }
+  };
+
+  const generateLectureQuiz = async () => {
+    if (!lecture?.id) {
+      return;
+    }
+
+    setQuizLoading(true);
+    try {
+      const questions = await generateQuiz(lecture.id);
+      setQuizQuestions(questions);
+    } catch (error) {
+      console.error("Error generating quiz:", error);
+    } finally {
+      setQuizLoading(false);
     }
   };
 
@@ -82,12 +102,18 @@ const LecturePage: React.FC = () => {
           activeButton={activeButton}
           courseItem={activeCourse}
           summarize={summarizeContent}
+          generateQuiz={generateLectureQuiz}
+          hasQuiz={quizQuestions.length > 0}
+          quizLoading={quizLoading}
         />
         <CourseContent
           activeState={activeButton}
           summaryLoading={summaryLoading}
           summarizedContent={summarizedContent}
           lectureUrl={lectureUrl}
+          quizQuestions={quizQuestions}
+          quizLoading={quizLoading}
+          onGenerateQuiz={generateLectureQuiz}
         />
       </div>
     </div>

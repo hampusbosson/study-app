@@ -14,6 +14,9 @@ interface ToolbarProps {
   setActiveButton: React.Dispatch<React.SetStateAction<string>>;
   courseItem: Course | null;
   summarize: (lectureId: string) => void;
+  generateQuiz: () => void;
+  hasQuiz: boolean;
+  quizLoading: boolean;
 }
 
 const Toolbar: React.FC<ToolbarProps> = ({
@@ -22,6 +25,9 @@ const Toolbar: React.FC<ToolbarProps> = ({
   setActiveButton,
   courseItem,
   summarize,
+  generateQuiz,
+  hasQuiz,
+  quizLoading,
 }) => {
   const navigate = useNavigate();
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
@@ -41,6 +47,9 @@ const Toolbar: React.FC<ToolbarProps> = ({
   };
 
   const handleQuizClick = () => {
+    if (!hasQuiz && !quizLoading) {
+      generateQuiz();
+    }
     setActiveButton("quiz");
   };
 

@@ -2,12 +2,17 @@ import React from "react";
 import { Tiptap } from "./TextEditor";
 import PdfViewer from "./pdf-viewer";
 import LoadingSpinner from "../../courses/components/LoadingSpinner";
+import { QuizQuestion } from "../../../types/api";
+import QuizPanel from "./quiz-panel";
 
 interface CourseContentProps {
   activeState: string;
   summaryLoading: boolean;
   summarizedContent: string;
-  lectureUrl: string | undefined; 
+  lectureUrl: string | undefined;
+  quizQuestions: QuizQuestion[];
+  quizLoading: boolean;
+  onGenerateQuiz: () => void;
 }
 
 const CourseContent: React.FC<CourseContentProps> = ({
@@ -15,6 +20,9 @@ const CourseContent: React.FC<CourseContentProps> = ({
   summaryLoading,
   summarizedContent,
   lectureUrl,
+  quizQuestions,
+  quizLoading,
+  onGenerateQuiz,
 }) => {
 
   const proxyUrl = `http://localhost:3000/api/lecture/proxy?url=${encodeURIComponent(lectureUrl || "")}`;
@@ -37,12 +45,11 @@ const CourseContent: React.FC<CourseContentProps> = ({
         {summaryLoading ? (<LoadingSpinner type="summary" />) : <Tiptap content={summarizedContent} />}
       </div>
       <div className={activeState === "quiz" ? "block" : "hidden"}>
-        <div className="rounded-lg border border-dashed border-slate-300 bg-white px-6 py-16 text-center shadow-sm">
-          <p className="text-lg font-semibold text-text">Quiz mode is the next step</p>
-          <p className="mt-2 text-sm text-muted">
-            The summary workflow is live today. Quiz generation can be layered on top of the same lecture content.
-          </p>
-        </div>
+        <QuizPanel
+          questions={quizQuestions}
+          loading={quizLoading}
+          onGenerate={onGenerateQuiz}
+        />
       </div>
     </div>
   );

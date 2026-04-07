@@ -3,6 +3,7 @@ import { PrismaClient } from "@prisma/client";
 import {
   fetchContentFromURL,
   summarizeContent,
+  generateQuizFromContent,
 } from "../services/contentService";
 import axios from "axios";
 
@@ -80,6 +81,36 @@ const summarizeLecture = async (req: Request, res: Response) => {
     });
   } catch (error) {
     console.error("Error summarizing lecture:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+const generateLectureQuiz = async (req: Request, res: Response) => {
+  try {
+    const { lectureId } = req.body;
+
+    if (!lectureId) {
+      res.status(400).json({ message: "LectureId is required." });
+      return;
+    }
+
+    const lecture = await prisma.lecture.findUnique({
+      where: { id: parseInt(lectureId) },
+    });
+
+    if (!lecture) {
+      res.status(404).json({ message: "Lecture not found." });
+      return;
+    }
+
+    const questions = await generateQuizFromContent(lecture.content);
+
+    res.status(200).json({
+      message: "Quiz generated successfully",
+      questions,
+    });
+  } catch (error) {
+    console.error("Error generating lecture quiz:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -194,4 +225,5 @@ export {
   deleteLecture,
   setPdfCorsHeader,
   summarizeLecture,
+  generateLectureQuiz,
 };

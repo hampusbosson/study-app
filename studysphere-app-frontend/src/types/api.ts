@@ -21,6 +21,13 @@ export type Course = Entity<{
     lectures?: Lecture[];
 }>
 
+export type QuizQuestion = {
+    question: string;
+    options: string[];
+    correctAnswer: string;
+    explanation: string;
+}
+
 export type Lecture = Entity<{
     title: string;
     content?: string;
