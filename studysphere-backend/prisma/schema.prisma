@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                     Int       @id @default(autoincrement()) // Auto-incrementing primary key
+  email                  String    @unique // Unique email address
+  isVerified             Boolean   @default(false)
+  verificationOtp        String?
+  verificationOtpExpires DateTime?
+  password               String // Password
+  resetToken             String? // Token for password reset
+  resetTokenExpires      DateTime? // Expiration time for reset token
+  createdAt              DateTime  @default(now()) // Timestamp of creation
+  updatedAt              DateTime  @updatedAt // Timestamp of last update
+
+  classes Class[] @relation("UserClasses")
+}
+
+model Class {
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  lectures  Lecture[] @relation("ClassLectures") // Relation to Note model
+  userId    Int // Foreign key to User
+  createdAt DateTime  @default(now()) // Timestamp of creation
+  updatedAt DateTime  @default(now()) @updatedAt // Timestamp of last update
+  user      User      @relation("UserClasses", fields: [userId], references: [id])
+}
+
+model Lecture {
+  id                Int      @id @default(autoincrement())
+  title             String
+  content           String
+  summarizedContent String? // Optional summarized content
+  url               String? // Optional URL field
+  classId           Int //Foreign key to Class
+  createdAt         DateTime @default(now()) // Timestamp of creation
+  updatedAt         DateTime @default(now()) @updatedAt // Timestamp of last update
+  class             Class    @relation("ClassLectures", fields: [classId], references: [id], onDelete: Cascade)
+}
