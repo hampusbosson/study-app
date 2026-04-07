@@ -139,7 +139,7 @@ const HomePage: React.FC = () => {
               </div>
               <button
                 onClick={() => setIsAddEventOpen(true)}
-                className="rounded-lg bg-accent px-4 py-2.5 text-sm font-semibold text-slate-950 transition hover:bg-accentHover dark:text-white"
+                className="rounded-lg bg-accent px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-accentHover"
               >
                 Add event
               </button>

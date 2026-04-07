@@ -48,34 +48,57 @@ const NewCourseModal: React.FC<NewCourseModalProps> = ({
       onClick={onClose}
     >
       <div
-        className="flex w-96 flex-col items-center rounded-lg border border-border bg-surface p-6 text-text shadow-2xl"
+        className="w-full max-w-md rounded-lg border border-border bg-surface p-6 text-text shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <h2 className="text-xl font-bold">Whats the name of your course?</h2>
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-normal text-accent">
+              New course
+            </p>
+            <h2 className="mt-2 font-montserrat text-2xl font-bold text-text">
+              Create a course
+            </h2>
+            <p className="mt-2 text-sm text-muted">
+              Start a new study space for a subject, module, or class.
+            </p>
+          </div>
+          <button
+            onClick={onClose}
+            type="button"
+            className="rounded-lg px-3 py-2 text-sm font-semibold text-muted transition hover:bg-surfaceAlt hover:text-text"
+          >
+            Close
+          </button>
+        </div>
         <form
-          className="flex flex-col justify-end gap-4 mt-4"
+          className="mt-6 flex flex-col gap-5"
           onSubmit={handleAddCourse}
         >
-          <InputField
-            type="text"
-            value={courseName}
-            onValueChange={setCourseName}
-          />
+          <div className="rounded-lg border border-border bg-surfaceAlt p-4">
+            <InputField
+              label="Course name"
+              type="text"
+              value={courseName}
+              onValueChange={setCourseName}
+              placeholder="Modern Physics"
+            />
+          </div>
           {errorMessage && (
-            <p className="text-red-500 text-xs text-left -mt-2 -mb-2">
+            <p className="text-left text-xs text-red-400">
               {errorMessage}
             </p>
           )}
-          <div className="flex flex-row items-center justify-center gap-4 mt-2">
+          <div className="flex items-center justify-end gap-3 border-t border-border pt-4">
             <button
               onClick={onClose}
               type="button"
-              className="rounded-lg px-5 py-2 font-semibold text-text transition hover:bg-surfaceAlt"
+              className="rounded-lg px-4 py-2 text-sm font-semibold text-text transition hover:bg-surfaceAlt"
             >
               Cancel
             </button>
             <button
-              className="rounded-lg bg-accent px-5 py-2 font-semibold text-slate-950 transition hover:bg-accentHover dark:text-white"
+              className="rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-accentHover"
               type="submit"
             >
               Create
