@@ -1,13 +1,21 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useCourses } from "@/hooks/courses/use-courses";
 import { getCourses } from "@/features/courses/api/get-courses";
 import { Lecture, Course } from "@/types/api";
 import DashboardLayout from "../../../components/layouts/dashboard-layout";
 import CourseOverview from "../../../features/courses/components/course-overview";
-
+import { CalendarEvent } from "../../../features/calendar/types";
+import AddEventModal from "../../../features/calendar/components/AddEventModal";
+import {
+  loadCalendarEvents,
+  saveCalendarEvents,
+} from "../../../features/calendar/lib/storage";
+import { format, isToday, parseISO } from "date-fns";
 
 const HomePage: React.FC = () => {
   const { courses, setCourses, setActiveCourse, setLecturesByCourse } = useCourses();
+  const [events, setEvents] = useState<CalendarEvent[]>([]);
+  const [isAddEventOpen, setIsAddEventOpen] = useState(false);
 
     useEffect(() => {
       const fetchCoursesWithLectures = async () => {
@@ -45,6 +53,14 @@ const HomePage: React.FC = () => {
       fetchCoursesWithLectures();
     }, []);
 
+  useEffect(() => {
+    setEvents(loadCalendarEvents());
+  }, []);
+
+  useEffect(() => {
+    saveCalendarEvents(events);
+  }, [events]);
+
   const totalLectures =
     courses?.reduce((count, course) => count + (course.lectures?.length || 0), 0) || 0;
   const summarizedLectures =
@@ -53,6 +69,34 @@ const HomePage: React.FC = () => {
         count + (course.lectures?.filter((lecture) => lecture.summarizedContent).length || 0),
       0,
     ) || 0;
+
+  const todaysEvents = useMemo(
+    () =>
+      events
+        .filter((event) => isToday(parseISO(event.date)))
+        .sort((a, b) => a.startTime.localeCompare(b.startTime)),
+    [events],
+  );
+
+  const upcomingEvents = useMemo(
+    () =>
+      events
+        .filter((event) => parseISO(event.date) >= new Date() && !isToday(parseISO(event.date)))
+        .sort((a, b) =>
+          `${a.date}${a.startTime}`.localeCompare(`${b.date}${b.startTime}`),
+        )
+        .slice(0, 3),
+    [events],
+  );
+
+  const handleAddEvent = (event: CalendarEvent) => {
+    setEvents((currentEvents) =>
+      [...currentEvents, event].sort((a, b) =>
+        `${a.date}${a.startTime}`.localeCompare(`${b.date}${b.startTime}`),
+      ),
+    );
+    setIsAddEventOpen(false);
+  };
 
   return (
     <DashboardLayout>
@@ -85,25 +129,87 @@ const HomePage: React.FC = () => {
         <div className="grid gap-8 xl:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)]">
           <CourseOverview />
           <section className="rounded-lg border border-border bg-surface p-6 shadow-sm">
-            <p className="text-sm font-semibold uppercase tracking-normal text-accent">Study workflow</p>
-            <h2 className="mt-3 font-montserrat text-2xl font-bold text-text">Your demo flow is already here.</h2>
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-normal text-accent">Schedule</p>
+                <h2 className="mt-3 font-montserrat text-2xl font-bold text-text">Today&apos;s events</h2>
+                <p className="mt-2 text-sm text-muted">
+                  Keep today in view and add a study block without leaving the dashboard.
+                </p>
+              </div>
+              <button
+                onClick={() => setIsAddEventOpen(true)}
+                className="rounded-lg bg-accent px-4 py-2.5 text-sm font-semibold text-slate-950 transition hover:bg-accentHover dark:text-white"
+              >
+                Add event
+              </button>
+            </div>
             <div className="mt-6 space-y-4">
-              <div className="rounded-lg bg-surfaceAlt px-4 py-4">
-                <p className="text-sm font-semibold text-text">1. Create a course</p>
-                <p className="mt-1 text-sm text-muted">Set up each subject as its own workspace.</p>
-              </div>
-              <div className="rounded-lg bg-surfaceAlt px-4 py-4">
-                <p className="text-sm font-semibold text-text">2. Add a lecture URL</p>
-                <p className="mt-1 text-sm text-muted">Pull in a PDF or public document and save it to the course.</p>
-              </div>
-              <div className="rounded-lg bg-surfaceAlt px-4 py-4">
-                <p className="text-sm font-semibold text-text">3. Read and summarize</p>
-                <p className="mt-1 text-sm text-muted">Switch between source material and an AI-generated summary.</p>
+              {todaysEvents.length === 0 ? (
+                <div className="rounded-lg border border-dashed border-border bg-surfaceAlt px-4 py-10 text-center">
+                  <p className="text-sm font-semibold text-text">Nothing scheduled today</p>
+                  <p className="mt-2 text-sm text-muted">
+                    Add a study session or deadline to start building your routine.
+                  </p>
+                </div>
+              ) : (
+                todaysEvents.map((event) => (
+                  <div
+                    key={event.id}
+                    className="rounded-lg bg-surfaceAlt px-4 py-4"
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div>
+                        <p className="text-sm font-semibold text-text">{event.title}</p>
+                        <p className="mt-1 text-sm text-muted">
+                          {event.startTime} - {event.endTime}
+                        </p>
+                      </div>
+                      <span className="rounded-full bg-accentSoft px-3 py-1 text-xs font-semibold text-accent">
+                        {event.type}
+                      </span>
+                    </div>
+                    {event.notes && (
+                      <p className="mt-3 text-sm text-muted">{event.notes}</p>
+                    )}
+                  </div>
+                ))
+              )}
+            </div>
+            <div className="mt-8">
+              <p className="text-sm font-semibold uppercase tracking-normal text-accent">
+                Coming up
+              </p>
+              <div className="mt-4 space-y-3">
+                {upcomingEvents.length === 0 ? (
+                  <div className="rounded-lg bg-surfaceAlt px-4 py-4">
+                    <p className="text-sm text-muted">No upcoming events yet.</p>
+                  </div>
+                ) : (
+                  upcomingEvents.map((event) => (
+                    <div
+                      key={event.id}
+                      className="rounded-lg bg-surfaceAlt px-4 py-4"
+                    >
+                      <p className="text-sm font-semibold text-text">{event.title}</p>
+                      <p className="mt-1 text-sm text-muted">
+                        {format(parseISO(event.date), "EEE, MMM d")} · {event.startTime}
+                      </p>
+                    </div>
+                  ))
+                )}
               </div>
             </div>
           </section>
         </div>
       </div>
+      {isAddEventOpen && (
+        <AddEventModal
+          selectedDate={format(new Date(), "yyyy-MM-dd")}
+          onClose={() => setIsAddEventOpen(false)}
+          onSubmit={handleAddEvent}
+        />
+      )}
     </DashboardLayout>
   );
 };
