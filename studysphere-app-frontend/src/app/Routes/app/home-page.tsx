@@ -10,11 +10,11 @@ import {
   loadCalendarEvents,
   saveCalendarEvents,
 } from "../../../features/calendar/lib/storage";
-import { format, isToday, parseISO } from "date-fns";
+import { format, isAfter, isToday, parseISO, startOfDay } from "date-fns";
 
 const HomePage: React.FC = () => {
   const { courses, setCourses, setActiveCourse, setLecturesByCourse } = useCourses();
-  const [events, setEvents] = useState<CalendarEvent[]>([]);
+  const [events, setEvents] = useState<CalendarEvent[]>(() => loadCalendarEvents());
   const [isAddEventOpen, setIsAddEventOpen] = useState(false);
 
     useEffect(() => {
@@ -54,10 +54,6 @@ const HomePage: React.FC = () => {
     }, []);
 
   useEffect(() => {
-    setEvents(loadCalendarEvents());
-  }, []);
-
-  useEffect(() => {
     saveCalendarEvents(events);
   }, [events]);
 
@@ -81,7 +77,11 @@ const HomePage: React.FC = () => {
   const upcomingEvents = useMemo(
     () =>
       events
-        .filter((event) => parseISO(event.date) >= new Date() && !isToday(parseISO(event.date)))
+        .filter((event) => {
+          const eventDate = startOfDay(parseISO(event.date));
+          const today = startOfDay(new Date());
+          return isAfter(eventDate, today);
+        })
         .sort((a, b) =>
           `${a.date}${a.startTime}`.localeCompare(`${b.date}${b.startTime}`),
         )
@@ -156,7 +156,7 @@ const HomePage: React.FC = () => {
                 todaysEvents.map((event) => (
                   <div
                     key={event.id}
-                    className="rounded-lg bg-surfaceAlt px-4 py-4"
+                    className="rounded-lg border border-border bg-surfaceAlt px-4 py-4 shadow-sm shadow-black/10"
                   >
                     <div className="flex items-start justify-between gap-3">
                       <div>

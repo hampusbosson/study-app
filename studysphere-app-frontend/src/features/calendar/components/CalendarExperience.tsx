@@ -32,11 +32,7 @@ const CalendarExperience: React.FC = () => {
   );
   const [currentDate, setCurrentDate] = useState(() => new Date());
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [events, setEvents] = useState<CalendarEvent[]>([]);
-
-  useEffect(() => {
-    setEvents(loadCalendarEvents());
-  }, []);
+  const [events, setEvents] = useState<CalendarEvent[]>(() => loadCalendarEvents());
 
   useEffect(() => {
     saveCalendarEvents(events);
