@@ -6,6 +6,46 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { paths } from "../../../config/paths";
 import useTheme from "../../../hooks/theme/useTheme";
 
+const ThemeToggleIcon: React.FC<{ theme: "dark" | "light" }> = ({ theme }) => {
+  if (theme === "dark") {
+    return (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth={1.8}
+        stroke="currentColor"
+        className="size-5"
+        aria-hidden="true"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M21.752 15.002A9.718 9.718 0 0 1 18 15.75 9.75 9.75 0 0 1 8.25 6a9.718 9.718 0 0 1 .748-3.752 9.753 9.753 0 1 0 12.754 12.754Z"
+        />
+      </svg>
+    );
+  }
+
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={1.8}
+      stroke="currentColor"
+      className="size-5"
+      aria-hidden="true"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M12 3v1.5M12 19.5V21M4.5 12H3m18 0h-1.5M6.697 6.697 5.636 5.636m12.728 12.728-1.061-1.061M6.697 17.303l-1.061 1.061m12.728-12.728-1.061 1.061M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
+      />
+    </svg>
+  );
+};
+
 const HeaderLoggedIn: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -100,9 +140,12 @@ const HeaderLoggedIn: React.FC = () => {
         <div className="flex items-center gap-3">
           <button
             onClick={toggleTheme}
-            className="rounded-lg border border-border bg-surface px-3 py-2 text-sm font-semibold text-text transition hover:bg-surfaceAlt"
+            type="button"
+            aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+            title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+            className="inline-flex size-10 items-center justify-center rounded-full border border-border bg-surface text-text transition hover:bg-surfaceAlt"
           >
-            {theme === "dark" ? "Light mode" : "Dark mode"}
+            <ThemeToggleIcon theme={theme} />
           </button>
           <div className="hidden text-right sm:block">
             <p className="text-sm font-semibold text-text">Welcome back</p>

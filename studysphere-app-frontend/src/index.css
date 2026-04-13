@@ -147,9 +147,10 @@ button {
 }
 
 .is-active {
-  background-color: rgba(255, 255, 255, 0.16);
-  color: #ffffff;
+  background-color: var(--color-accent-soft);
+  color: var(--color-accent);
   border-radius: 0.5rem;
+  box-shadow: inset 0 0 0 1px var(--color-accent);
 }
 
 .editor-tool {
@@ -159,7 +160,7 @@ button {
 
 .editor-tool:hover {
   color: var(--color-text);
-  background-color: var(--color-surface);
+  background-color: var(--color-accent-soft);
 }
 
 

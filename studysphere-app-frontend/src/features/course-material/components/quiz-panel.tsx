@@ -134,9 +134,9 @@ const QuizPanel: React.FC<QuizPanelProps> = ({
 
             const stateClass = isRevealed
               ? isCorrect
-                ? "border-emerald-500/40 bg-emerald-500/12 text-emerald-300"
+                ? "border-emerald-300 bg-emerald-100 text-emerald-800 dark:border-emerald-500/40 dark:bg-emerald-500/12 dark:text-emerald-300"
                 : isSelected
-                  ? "border-rose-500/40 bg-rose-500/12 text-rose-300"
+                  ? "border-rose-300 bg-rose-100 text-rose-800 dark:border-rose-500/40 dark:bg-rose-500/12 dark:text-rose-300"
                   : "border-border bg-surface text-muted"
               : isSelected
                 ? "border-accent bg-accentSoft text-text"
@@ -159,7 +159,7 @@ const QuizPanel: React.FC<QuizPanelProps> = ({
             <button
               onClick={handleCheckAnswer}
               disabled={!selectedAnswer || isRevealed}
-              className="rounded-lg bg-accent px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-accentHover disabled:cursor-not-allowed disabled:bg-surfaceAlt disabled:text-muted dark:text-white"
+              className="rounded-lg bg-accent px-5 py-3 text-sm font-semibold !text-white transition hover:bg-accentHover disabled:cursor-not-allowed disabled:opacity-65"
             >
               Check answer
             </button>
@@ -236,8 +236,8 @@ const QuizPanel: React.FC<QuizPanelProps> = ({
                     ? "bg-accent text-slate-950 dark:text-white"
                     : isAnswered
                       ? isCorrect
-                        ? "bg-emerald-500/12 text-emerald-300"
-                        : "bg-rose-500/12 text-rose-300"
+                        ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-500/12 dark:text-emerald-300"
+                        : "bg-rose-100 text-rose-800 dark:bg-rose-500/12 dark:text-rose-300"
                       : "bg-surfaceAlt text-muted hover:bg-backgroundOverlay hover:text-text"
                 }`}
               >
